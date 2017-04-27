@@ -1,0 +1,3 @@
+[submodule "resnet"]
+	path = resnet
+	url = https://github.com/Cyanogenoid/pytorch-resnet
