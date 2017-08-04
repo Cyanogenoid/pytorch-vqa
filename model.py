@@ -130,7 +130,7 @@ def apply_attention(input, attention):
 
     # apply a softmax to each attention map separately
     # since softmax only takes 2d inputs, we have to collapse the first two dimensions together
-    # so that each glimpse is normalised separately
+    # so that each glimpse is normalized separately
     attention = attention.view(n * glimpses, -1)
     attention = F.softmax(attention)
 

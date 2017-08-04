@@ -163,7 +163,7 @@ class VQA(data.Dataset):
 # this is used for normalizing questions
 _special_chars = re.compile('[^a-z0-9 ]*')
 
-# these try to emulate the original normalisation scheme for answers
+# these try to emulate the original normalization scheme for answers
 _period_strip = re.compile(r'(?!<=\d)(\.)(?!\d)')
 _comma_strip = re.compile(r'(\d)(,)(\d)')
 _punctuation_chars = re.escape(r';/[]"{}()=+\_-><@`,?!')
@@ -182,10 +182,10 @@ def prepare_questions(questions_json):
 def prepare_answers(answers_json):
     """ Normalize answers from a given answer json in the usual VQA format. """
     answers = [[a['answer'] for a in ans_dict['answers']] for ans_dict in answers_json['annotations']]
-    # The only normalisation that is applied to both machine generated answers as well as
+    # The only normalization that is applied to both machine generated answers as well as
     # ground truth answers is replacing most punctuation with space (see [0] and [1]).
     # Since potential machine generated answers are just taken from most common answers, applying the other
-    # normalisations is not needed, assuming that the human answers are already normalized.
+    # normalizations is not needed, assuming that the human answers are already normalized.
     # [0]: http://visualqa.org/evaluation.html
     # [1]: https://github.com/VT-vision-lab/VQA/blob/3849b1eae04a0ffd83f56ad6f70ebd0767e09e0f/PythonEvaluationTools/vqaEvaluation/vqaEval.py#L96
 
