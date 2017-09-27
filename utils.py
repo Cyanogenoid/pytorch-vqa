@@ -10,7 +10,7 @@ import config
 
 def batch_accuracy(predicted, true):
     """ Compute the accuracies for a batch of predictions and answers """
-    _, predicted_index = predicted.max(dim=1)
+    _, predicted_index = predicted.max(dim=1, keepdim=True)
     agreeing = true.gather(dim=1, index=predicted_index)
     '''
     Acc needs to be averaged over all 10 choose 9 subsets of human answers.
