@@ -48,7 +48,7 @@ class Net(nn.Module):
     def forward(self, v, q, q_len):
         q = self.text(q, list(q_len.data))
 
-        v = v / (v.norm(p=2, dim=1).expand_as(v) + 1e-8)
+        v = v / (v.norm(p=2, dim=1, keepdim=True).expand_as(v) + 1e-8)
         a = self.attention(v, q)
         v = apply_attention(v, a)
 
