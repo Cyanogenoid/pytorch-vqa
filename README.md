@@ -16,6 +16,8 @@ A fully trained model (convergence shown below) is [available for download][5].
 
 ![Graph of convergence of implementation versus paper results](http://i.imgur.com/moWYEm8.png)
 
+Note that the model in [my other VQA repo](https://github.com/Cyanogenoid/vqa-counting) performs better than the model implemented here.
+
 
 ## Running the model
 
