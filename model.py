@@ -117,31 +117,16 @@ class Attention(nn.Module):
 
 
 def apply_attention(input, attention):
-    """ Apply any number of attention maps over the input.
-        The attention map has to have the same size in all dimensions except dim=1.
-    """
+    """ Apply any number of attention maps over the input. """
     n, c = input.size()[:2]
     glimpses = attention.size(1)
 
     # flatten the spatial dims into the third dim, since we don't need to care about how they are arranged
-    input = input.view(n, c, -1)
+    input = input.view(n, 1, c, -1) # [n, 1, c, s]
     attention = attention.view(n, glimpses, -1)
-    s = input.size(2)
-
-    # apply a softmax to each attention map separately
-    # since softmax only takes 2d inputs, we have to collapse the first two dimensions together
-    # so that each glimpse is normalized separately
-    attention = attention.view(n * glimpses, -1)
-    attention = F.softmax(attention)
-
-    # apply the weighting by creating a new dim to tile both tensors over
-    target_size = [n, glimpses, c, s]
-    input = input.view(n, 1, c, s).expand(*target_size)
-    attention = attention.view(n, glimpses, 1, s).expand(*target_size)
-    weighted = input * attention
-    # sum over only the spatial dimension
-    weighted_mean = weighted.sum(dim=3)
-    # the shape at this point is (n, glimpses, c, 1)
+    attention = F.softmax(attention, dim=-1).unsqueeze(2) # [n, g, 1, s]
+    weighted = attention * input # [n, g, v, s]
+    weighted_mean = weighted.sum(dim=-1) # [n, g, v]
     return weighted_mean.view(n, -1)
 
 

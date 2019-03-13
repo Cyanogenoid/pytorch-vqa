@@ -74,7 +74,9 @@ def run(net, loader, optimizer, tracker, train=False, prefix='', epoch=0):
             idxs.append(idx.view(-1).clone())
 
         loss_tracker.append(loss.data[0])
-        acc_tracker.append(acc.mean())
+        # acc_tracker.append(acc.mean())
+        for a in acc:
+            acc_tracker.append(a.item())
         fmt = '{:.4f}'.format
         tq.set_postfix(loss=fmt(loss_tracker.mean.value), acc=fmt(acc_tracker.mean.value))
 
