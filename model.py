@@ -87,7 +87,7 @@ class TextProcessor(nn.Module):
 
     def _init_lstm(self, weight):
         for w in weight.chunk(4, 0):
-            init.xavier_uniform(w)
+            init.xavier_uniform_(w)
 
     def forward(self, q, q_len):
         embedded = self.embedding(q)
