@@ -128,7 +128,7 @@ class Tracker:
 
 def get_transform(target_size, central_fraction=1.0):
     return transforms.Compose([
-        transforms.Scale(int(target_size / central_fraction)),
+        transforms.Resize(int(target_size / central_fraction)),
         transforms.CenterCrop(target_size),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406],
