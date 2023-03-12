@@ -61,7 +61,7 @@ def main():
         i = j = 0
         with torch.no_grad():
             for ids, imgs in tqdm(loader):
-                imgs = Variable(imgs.cuda(async=True))
+                imgs = Variable(imgs.cuda(non_blocking=True))
                 out = net(imgs)
 
                 j = i + imgs.size(0)
