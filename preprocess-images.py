@@ -59,14 +59,15 @@ def main():
         coco_ids = fd.create_dataset('ids', shape=(len(loader.dataset),), dtype='int32')
 
         i = j = 0
-        for ids, imgs in tqdm(loader):
-            imgs = Variable(imgs.cuda(async=True), volatile=True)
-            out = net(imgs)
+        with torch.no_grad():
+            for ids, imgs in tqdm(loader):
+                imgs = Variable(imgs.cuda(non_blocking=True))
+                out = net(imgs)
 
-            j = i + imgs.size(0)
-            features[i:j, :, :] = out.data.cpu().numpy().astype('float16')
-            coco_ids[i:j] = ids.numpy().astype('int32')
-            i = j
+                j = i + imgs.size(0)
+                features[i:j, :, :] = out.data.cpu().numpy().astype('float16')
+                coco_ids[i:j] = ids.numpy().astype('int32')
+                i = j
 
 
 if __name__ == '__main__':
